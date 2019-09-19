@@ -20,5 +20,12 @@
         android:scaleType="fitCenter"
         android:src="@drawable/fit_to_scan"/>
 
+    <Button
+        android:id="@+id/collection_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:text="@string/collections_button" />
+
 
 </FrameLayout>

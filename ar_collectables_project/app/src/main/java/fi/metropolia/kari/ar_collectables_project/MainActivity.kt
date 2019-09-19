@@ -1,5 +1,6 @@
 package fi.metropolia.kari.ar_collectables_project
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -16,20 +17,43 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var fragment: ArFragment
     private var img_01_rend: ViewRenderable? = null
+    private var img_02_rend: ViewRenderable? = null
+    private var img_03_rend: ViewRenderable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         fragment = supportFragmentManager.findFragmentById(R.id.ar_image_fragment) as ArFragment
 
-        val renderableFuture = ViewRenderable.builder()
+        collection_button.setOnClickListener { view ->
+            val intent = Intent(this, CollectionActivity::class.java)
+            startActivity(intent)
+        }
+
+        val renderableFuture1 = ViewRenderable.builder()
             .setView(this, R.layout.rendtext)
             .build()
-        renderableFuture.thenAccept {it -> img_01_rend = it }
+        renderableFuture1.thenAccept {it -> img_01_rend = it }
 
-            fragment.arSceneView.scene.addOnUpdateListener { frameTime ->
+        val renderableFuture2 = ViewRenderable.builder()
+            .setView(this, R.layout.rendtext)
+            .build()
+        renderableFuture2.thenAccept {it -> img_02_rend = it }
+
+        val renderableFuture3 = ViewRenderable.builder()
+            .setView(this, R.layout.rendtext)
+            .build()
+        renderableFuture3.thenAccept {it -> img_03_rend = it }
+
+        img_01_rend?.view?.setOnClickListener { view -> objectFound(img_01_rend!!) }
+        img_02_rend?.view?.setOnClickListener { view -> objectFound(img_02_rend!!) }
+        img_03_rend?.view?.setOnClickListener { view -> objectFound(img_03_rend!!) }
+
+        fragment.arSceneView.scene.addOnUpdateListener { frameTime ->
                 onUpdate(frameTime)
             }
+
+
         }
 
 
@@ -68,4 +92,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
         }
+
+    private fun objectFound(viewRenderable: ViewRenderable){
+        when(viewRenderable){
+            img_01_rend -> DataManager.discovered.put(IMG_01, true)
+            img_02_rend -> DataManager.discovered.put(IMG_02, true)
+            img_03_rend -> DataManager.discovered.put(IMG_03, true)
+        }
+    }
     }

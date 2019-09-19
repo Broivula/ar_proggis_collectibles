@@ -2,11 +2,14 @@ package fi.metropolia.kari.ar_collectables_project
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.collection_row.view.*
 
 class CollectionActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
@@ -18,9 +21,9 @@ class CollectionActivity : AppCompatActivity() {
         setContentView(R.layout.activity_collection)
 
         viewManager = LinearLayoutManager(this)
-        viewAdapter = MyAdapter(myDataset)
+        viewAdapter = MyAdapter()
 
-        recyclerView = findViewById<RecyclerView>(R.id.my_recycler_view).apply {
+        recyclerView = findViewById<RecyclerView>(R.id.collection_recycler_view).apply {
             // use this setting to improve performance if you know that changes
             // in content do not change the layout size of the RecyclerView
             setHasFixedSize(true)
@@ -35,34 +38,31 @@ class CollectionActivity : AppCompatActivity() {
     }
 }
 
-class MyAdapter(private val myDataset: Array<String>) :
-    RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class MyAdapter() : RecyclerView.Adapter<CustomViewHolder>() {
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder.
-    // Each data item is just a string in this case that is shown in a TextView.
-    class MyViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView)
-
-
-    // Create new views (invoked by the layout manager)
-    override fun onCreateViewHolder(parent: ViewGroup,
-                                    viewType: Int): MyAdapter.MyViewHolder {
-        // create a new view
-        val textView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.my_text_view, parent, false) as TextView
-        // set the view's size, margins, paddings and layout parameters
-
-        return MyViewHolder(textView)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val element = layoutInflater.inflate(R.layout.collection_row, parent, false)
+        return CustomViewHolder(element)
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        holder.textView.text = myDataset[position]
+    override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+        //first check if discovered or not
+
+        if(DataManager.discovered.values.toList().get(position)){
+            //thing is discovered, display normal text and checkmark
+            holder.view.collec_name_text_view.text = DataManager.discovered.keys.toList().get(position)
+            holder.view.collec_image_view.setImageResource(R.drawable.ic_check_green_24dp)
+        }else{
+            holder.view.collec_name_text_view.text = "???????"
+            holder.view.collec_image_view.setImageResource(R.drawable.ic_check_box_outline_blank_black_30dp)
+        }
+
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = myDataset.size
+    override fun getItemCount(): Int {
+        return DataManager.discovered.keys.size
+    }
 }
+
+class CustomViewHolder(val view: View) : RecyclerView.ViewHolder(view)

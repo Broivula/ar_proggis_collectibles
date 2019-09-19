@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">ARbasic1</string>
+    <string name="app_name">ar_collectables_project</string>
+    <string name="collections_button">Collection</string>
 </resources>
