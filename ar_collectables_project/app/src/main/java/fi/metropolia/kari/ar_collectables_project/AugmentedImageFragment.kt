@@ -35,10 +35,10 @@ class AugmentedImageFragment: ArFragment(){
         val augmentedImageBitmap1 = BitmapFactory.decodeStream(inputStream1)
 
         val inputStream2 = assetManager.open(IMG_02)
-        val augmentedImageBitmap2 = BitmapFactory.decodeStream(inputStream1)
+        val augmentedImageBitmap2 = BitmapFactory.decodeStream(inputStream2)
 
         val inputStream3 = assetManager.open(IMG_03)
-        val augmentedImageBitmap3 = BitmapFactory.decodeStream(inputStream1)
+        val augmentedImageBitmap3 = BitmapFactory.decodeStream(inputStream3)
 
         augmentedImageDb = AugmentedImageDatabase(session)
         augmentedImageDb.addImage(IMG_01, augmentedImageBitmap1)
