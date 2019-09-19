@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     private fun onUpdate(frameTime: FrameTime){
 
         fragment.onUpdate(frameTime)
@@ -58,8 +57,8 @@ class MainActivity : AppCompatActivity() {
         val updatedAugmentedImages = arFrame.getUpdatedTrackables(AugmentedImage::class.java)
         updatedAugmentedImages.forEach {
             when(it.trackingState){
-                TrackingState.PAUSED -> println("tracking state paused, yo. fill something in here later if necessary")
-                TrackingState.STOPPED -> println("tracking state has stopped, maybe call some functions bud")
+                TrackingState.PAUSED -> {if(!DataManager.complete)fit_to_scan.visibility = View.VISIBLE}
+                TrackingState.STOPPED -> println("KIKKEL tracking state has stopped, maybe call some functions bud")
                 TrackingState.TRACKING -> {
                     var anchors = it.anchors
                     if(anchors.isEmpty()) {
@@ -72,19 +71,19 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         if (item == null) return
-
                         fit_to_scan.visibility = View.GONE
                         val pose = it.centerPose
                         val anchor = it.createAnchor(pose)
                         val anchorNode = AnchorNode(anchor)
                         anchorNode.setParent(fragment.arSceneView.scene)
 
+
                         val imgNode = TransformableNode(fragment.transformationSystem)
                         imgNode.renderable = DataManager.renderables[item]
                         imgNode.setParent(anchorNode)
 
                         imgNode.setOnTapListener { hitTestResult, motionEvent ->
-                            objectFound(item)
+                            objectFound(item, imgNode)
                         }
                     }
                 }
@@ -92,8 +91,10 @@ class MainActivity : AppCompatActivity() {
         }
         }
 
-    private fun objectFound(item: Item){
+    private fun objectFound(item: Item, imgNode: TransformableNode){
         DataManager.discovered.put(item, true)
+        imgNode.renderable = null
         Toast.makeText(applicationContext, "Discovered \"${item.name}\"", Toast.LENGTH_LONG).show()
+        if(DataManager.discovered.size >= 3){DataManager.complete = true}
     }
 }

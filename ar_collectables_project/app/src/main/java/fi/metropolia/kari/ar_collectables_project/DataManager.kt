@@ -5,7 +5,9 @@ import kotlin.collections.LinkedHashMap
 
 class Item(val tag: String, val model: String, val name: String, val description: String)
 
+
 object DataManager {
+    var complete = false
     val options: Array<Item> = arrayOf(
         Item(
             IMG_01,
