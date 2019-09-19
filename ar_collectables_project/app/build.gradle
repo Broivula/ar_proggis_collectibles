@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.ar.sceneform.plugin'
 
 
 android {
@@ -40,3 +41,19 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
 }
+
+
+sceneform.asset('sampledata/urban_art_1.obj',
+        'default',
+        'sampledata/urban_art_1.sfa',
+        'src/main/assets/urban_art_1')
+
+sceneform.asset('sampledata/urban_art_2.obj',
+        'default',
+        'sampledata/urban_art_2.sfa',
+        'src/main/assets/urban_art_2')
+
+sceneform.asset('sampledata/Porsas.obj',
+        'default',
+        'sampledata/Porsas.sfa',
+        'src/main/assets/Porsas')

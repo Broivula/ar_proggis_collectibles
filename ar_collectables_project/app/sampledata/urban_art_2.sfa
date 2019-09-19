@@ -1,0 +1,50 @@
+{
+  materials: [
+    {
+      name: 'urban_art_2',
+      parameters: [
+        {
+          baseColor: 'urban_art_2',
+        },
+        {
+          baseColorTint: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          metallic: 0,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'TexCoord',
+      'Orientation',
+    ],
+    collision: {},
+    file: 'sampledata/urban_art_2.obj',
+    name: 'urban_art_2',
+    recenter: 'root',
+    scale: 0.00015,
+  },
+  samplers: [
+    {
+      file: 'sampledata/urban_art_2.jpg',
+      name: 'urban_art_2',
+      pipeline_name: 'urban_art_2.jpg',
+    },
+  ],
+  version: '0.54:2',
+}

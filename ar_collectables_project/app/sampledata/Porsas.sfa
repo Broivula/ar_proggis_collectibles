@@ -1,0 +1,50 @@
+{
+  materials: [
+    {
+      name: 'Porsas',
+      parameters: [
+        {
+          baseColor: 'Porsas',
+        },
+        {
+          baseColorTint: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          metallic: 0,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'TexCoord',
+      'Orientation',
+    ],
+    collision: {},
+    file: 'sampledata/Porsas.obj',
+    name: 'Porsas',
+    recenter: 'root',
+    scale: 0.00015,
+  },
+  samplers: [
+    {
+      file: 'sampledata/Porsas.jpg',
+      name: 'Porsas',
+      pipeline_name: 'Porsas.jpg',
+    },
+  ],
+  version: '0.54:2',
+}

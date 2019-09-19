@@ -47,21 +47,24 @@ class MyAdapter() : RecyclerView.Adapter<CustomViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        //first check if discovered or not
+        val item = DataManager.options[position]
+        val discovered = DataManager.discovered[item]
 
-        if(DataManager.discovered.values.toList().get(position)){
-            //thing is discovered, display normal text and checkmark
-            holder.view.collec_name_text_view.text = DataManager.discovered.keys.toList().get(position)
+        if (discovered != null && discovered) {
+            // Thing is discovered, display normal text and check
+            holder.view.collec_name_text_view.text = item.name
+            holder.view.textView2.text = item.description
             holder.view.collec_image_view.setImageResource(R.drawable.ic_check_green_24dp)
-        }else{
+        } else {
             holder.view.collec_name_text_view.text = "???????"
+            holder.view.textView2.text = "????"
             holder.view.collec_image_view.setImageResource(R.drawable.ic_check_box_outline_blank_black_30dp)
         }
 
     }
 
     override fun getItemCount(): Int {
-        return DataManager.discovered.keys.size
+        return DataManager.options.size
     }
 }
 
